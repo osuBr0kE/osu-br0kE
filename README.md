@@ -5,7 +5,7 @@
 # osu!br0kE lazer client
 
 [![GitHub release](https://img.shields.io/github/release/osuBr0kE/osulazer-client.svg)](https://github.com/osuBr0kE/osulazer-client/releases/latest)
-[![dev chat](https://discordapp.com/api/guilds/1367803175742079057/widget.png?style=shield)](https://discord.gg/mVAPWyUfnq)
+[![dev chat](https://dcbadge.limes.pink/api/server/https://discord.gg/mVAPWyUfnq)](https://discord.gg/mVAPWyUfnq)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/osu-web/localized.svg)](https://crowdin.com/project/osu-web)
 
 A free-to-win rhythm game. Rhythm is just a *click* away!
