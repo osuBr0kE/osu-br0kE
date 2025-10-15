@@ -9,4 +9,4 @@
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/osu-web/localized.svg)](https://crowdin.com/project/osu-web)
 
 A free-to-win rhythm game. Rhythm is just a *click* away!
-Modified lazer client to connect to the osu!br0kE servers. Full repository: osuBr0kE/osuBr0kE-lazer
+Modified lazer client to connect to the osu!br0kE servers.
