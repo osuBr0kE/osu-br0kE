@@ -118,7 +118,7 @@ Click to see what's new!", version);
         /// <summary>
         /// "This is not an official build of the game. Scores will not be submitted and other online systems may not work as intended."
         /// </summary>
-        public static LocalisableString NotOfficialBuild => new TranslatableString(getKey(@"not_official_build"), @"This is not an official build of the game. Scores will not be submitted and other online systems may not work as intended.");
+        public static LocalisableString NotOfficialBuild => new TranslatableString(getKey(@"not_official_build"), @"This is osu!br0kE, in development phase. Online systems may not work as intended, but the game will still be playable.");
 
         /// <summary>
         /// "Downloading update..."

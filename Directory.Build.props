@@ -44,10 +44,10 @@
   </PropertyGroup>
   <PropertyGroup Label="Nuget">
     <IsPackable>false</IsPackable>
-    <Authors>ppy Pty Ltd</Authors>
+    <Authors>ppy Pty Ltd, osu!br0kE devteam</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/ppy/osu</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ppy/osu</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/osuBr0kE/osulazer-client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/osuBr0kE/osulazer-client</RepositoryUrl>
     <PackageReleaseNotes>Automated release.</PackageReleaseNotes>
     <Company>ppy Pty Ltd</Company>
     <Copyright>Copyright (c) 2025 ppy Pty Ltd</Copyright>
