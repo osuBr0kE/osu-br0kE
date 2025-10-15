@@ -28,6 +28,8 @@ namespace osu.Game.Online.Notifications.WebSocket
         {
             this.socket = socket;
             this.endpoint = endpoint;
+
+            Logger.Log("osu!br0kE debug [WebSocketNotificationsClient socket: " + socket + ", endpoint: " + endpoint + ")");
         }
 
         public override async Task ConnectAsync(CancellationToken cancellationToken)

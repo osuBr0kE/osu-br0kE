@@ -7,13 +7,14 @@ namespace osu.Game.Online
     {
         public ProductionEndpointConfiguration()
         {
-            WebsiteUrl = APIUrl = @"https://osu.ppy.sh";
-            APIClientSecret = @"FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk";
-            APIClientID = "5";
-            SpectatorUrl = "https://spectator.ppy.sh/spectator";
-            MultiplayerUrl = "https://spectator.ppy.sh/multiplayer";
-            MetadataUrl = "https://spectator.ppy.sh/metadata";
-            BeatmapSubmissionServiceUrl = "https://bss.ppy.sh";
+            WebsiteUrl = APIUrl = @"https://lazer.br0k3x.info";    // [    osu!br0kE-web    ]
+            APIClientSecret = @"ihONKExY2tNSeyvmddCjdf8V724x8MhQxoFg4VaI";//        [       Client Secret and ID          ]
+            APIClientID = "1";//             [     Generate via php artisan        ]
+
+            SpectatorUrl = "https://spectator.br0k3x.info/spectator";//default: spectator.br0k3x.info/spectator          [                      ]
+            MultiplayerUrl = "https://spectator.br0k3x.info/multiplayer";//default: spectator.br0k3x.info/multiplayer    [    SignalR server    ]
+            MetadataUrl = "https://spectator.br0k3x.info/metadata";//default: spectator.br0k3x.info/metadata             [                      ]
+            BeatmapSubmissionServiceUrl = "https://bss.br0k3x.info";//default: bss.br0k3x.info                       [   Beatmap Submission Service   ]
         }
     }
 }

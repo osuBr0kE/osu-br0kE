@@ -109,8 +109,6 @@ namespace osu.Game.Database
         /// </summary>
         private readonly SemaphoreSlim realmRetrievalLock = new SemaphoreSlim(1);
 
-        private readonly CountdownEvent pendingAsyncOperations = new CountdownEvent(0);
-
         /// <summary>
         /// <c>true</c> when the current thread has already entered the <see cref="realmRetrievalLock"/>.
         /// </summary>
@@ -470,30 +468,6 @@ namespace osu.Game.Database
         }
 
         /// <summary>
-        /// Run work on realm on a TPL thread, in a way that ensures that the realm isn't disposed before the work is done.
-        /// </summary>
-        public Task<T> RunAsync<T>(Func<Realm, T> action, CancellationToken token = default)
-        {
-            ObjectDisposedException.ThrowIf(isDisposed, this);
-
-            // Required to ensure the read is tracked and accounted for before disposal.
-            // Can potentially be avoided if we have a need to do so in the future.
-            if (!ThreadSafety.IsUpdateThread)
-                throw new InvalidOperationException($@"{nameof(RunAsync)} must be called from the update thread.");
-
-            // CountdownEvent will fail if already at zero.
-            if (!pendingAsyncOperations.TryAddCount())
-                pendingAsyncOperations.Reset(1);
-
-            return Task.Run(() =>
-            {
-                var result = Run(action);
-                pendingAsyncOperations.Signal();
-                return result;
-            }, token);
-        }
-
-        /// <summary>
         /// Write changes to realm.
         /// </summary>
         /// <param name="action">The work to run.</param>
@@ -533,6 +507,8 @@ namespace osu.Game.Database
             }
         }
 
+        private readonly CountdownEvent pendingAsyncWrites = new CountdownEvent(0);
+
         /// <summary>
         /// Write changes to realm asynchronously, guaranteeing order of execution.
         /// </summary>
@@ -547,8 +523,8 @@ namespace osu.Game.Database
                 throw new InvalidOperationException(@$"{nameof(WriteAsync)} must be called from the update thread.");
 
             // CountdownEvent will fail if already at zero.
-            if (!pendingAsyncOperations.TryAddCount())
-                pendingAsyncOperations.Reset(1);
+            if (!pendingAsyncWrites.TryAddCount())
+                pendingAsyncWrites.Reset(1);
 
             // Regardless of calling Realm.GetInstance or Realm.GetInstanceAsync, there is a blocking overhead on retrieval.
             // Adding a forced Task.Run resolves this.
@@ -563,7 +539,7 @@ namespace osu.Game.Database
                     // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
                     await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
 
-                pendingAsyncOperations.Signal();
+                pendingAsyncWrites.Signal();
             });
 
             return writeTask;
@@ -583,8 +559,8 @@ namespace osu.Game.Database
                 throw new InvalidOperationException(@$"{nameof(WriteAsync)} must be called from the update thread.");
 
             // CountdownEvent will fail if already at zero.
-            if (!pendingAsyncOperations.TryAddCount())
-                pendingAsyncOperations.Reset(1);
+            if (!pendingAsyncWrites.TryAddCount())
+                pendingAsyncWrites.Reset(1);
 
             // Regardless of calling Realm.GetInstance or Realm.GetInstanceAsync, there is a blocking overhead on retrieval.
             // Adding a forced Task.Run resolves this.
@@ -600,7 +576,7 @@ namespace osu.Game.Database
                     // ReSharper disable once AccessToDisposedClosure (WriteAsync should be marked as [InstantHandle]).
                     result = await realm.WriteAsync(() => action(realm)).ConfigureAwait(false);
 
-                pendingAsyncOperations.Signal();
+                pendingAsyncWrites.Signal();
                 return result;
             });
 
@@ -1518,7 +1494,7 @@ namespace osu.Game.Database
 
         public void Dispose()
         {
-            if (!pendingAsyncOperations.Wait(10000))
+            if (!pendingAsyncWrites.Wait(10000))
                 Logger.Log("Realm took too long waiting on pending async writes", level: LogLevel.Error);
 
             updateRealm?.Dispose();

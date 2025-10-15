@@ -27,6 +27,9 @@ namespace osu.Game.Overlays.Profile.Header.Components
         private OsuSpriteText levelText = null!;
         private Sprite sprite = null!;
 
+        [Resolved]
+        private OsuColour osuColour { get; set; } = null!;
+
         public LevelBadge()
         {
             TooltipText = UsersStrings.ShowStatsLevel("0");
@@ -88,7 +91,7 @@ namespace osu.Game.Overlays.Profile.Header.Components
                 tier = RankingTier.Lustrous;
             }
 
-            return OsuColour.ForRankingTier(tier);
+            return osuColour.ForRankingTier(tier);
         }
     }
 }

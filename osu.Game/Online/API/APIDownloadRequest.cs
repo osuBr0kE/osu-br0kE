@@ -32,6 +32,7 @@ namespace osu.Game.Online.API
 
             var request = new FileWebRequest(filename, Uri);
             request.DownloadProgress += request_Progress;
+            request.AllowInsecureRequests = true;
             return request;
         }
 

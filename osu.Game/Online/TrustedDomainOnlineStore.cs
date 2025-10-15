@@ -11,8 +11,10 @@ namespace osu.Game.Online
     {
         protected override string GetLookupUrl(string url)
         {
-            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uri) || !uri.Host.EndsWith(@".ppy.sh", StringComparison.OrdinalIgnoreCase))
+            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uri) || !uri.Host.EndsWith(@".br0k3x.info", StringComparison.OrdinalIgnoreCase) && !uri.Host.EndsWith(@".ppy.sh", StringComparison.OrdinalIgnoreCase))
             {
+                // added .br0k3x.info to allow lookup of the osu!br0kE server 10/15/25
+
                 Logger.Log($@"Blocking resource lookup from external website: {url}", LoggingTarget.Network, LogLevel.Important);
                 return string.Empty;
             }

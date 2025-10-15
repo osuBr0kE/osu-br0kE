@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Localisation;
@@ -279,13 +278,8 @@ namespace osu.Game.Screens.SelectV2
             }, token);
         }
 
-        private CancellationTokenSource? onlineDisplayCancellationSource;
-
         private void updateOnlineDisplay()
         {
-            onlineDisplayCancellationSource?.Cancel();
-            onlineDisplayCancellationSource = null;
-
             if (onlineLookupResult.Value?.Status != SongSelect.BeatmapSetLookupStatus.Completed)
             {
                 playCount.Value = null;
@@ -297,42 +291,21 @@ namespace osu.Game.Screens.SelectV2
                 playCount.Value = new StatisticPlayCount.Data(onlineBeatmap?.PlayCount ?? -1, onlineBeatmap?.UserPlayCount ?? -1);
                 favouriteButton.SetBeatmapSet(onlineLookupResult.Value.Result);
 
-                onlineDisplayCancellationSource = new CancellationTokenSource();
-                var token = onlineDisplayCancellationSource.Token;
-
                 // the online fetch may have also updated the beatmap's status.
                 // this needs to be checked against the *local* beatmap model rather than the online one, because it's not known here whether the status change has occurred or not
                 // (think scenarios like the beatmap being locally modified).
                 // it also has to be handled explicitly like this because the working beatmap's `BeatmapInfo` will not receive these updates due to being detached
                 // (and because of https://github.com/ppy/osu/blob/4b73afd1957a9161e2956fc4191c8114d9958372/osu.Game/Screens/SelectV2/SongSelect.cs#L487-L488
                 // which prevents working beatmap refetches caused by changes to the realm model of perceived low importance).
-                realm.RunAsync(r =>
+                var status = realm.Run(r =>
                 {
+                    r.Refresh();
                     var refetchedBeatmap = r.Find<BeatmapInfo>(working.Value.BeatmapInfo.ID);
                     return refetchedBeatmap?.Status;
-                }, token).ContinueWith(t =>
-                {
-                    var status = t.GetResultSafely();
-
-                    if (status != null)
-                    {
-                        Schedule(() =>
-                        {
-                            if (token.IsCancellationRequested)
-                                return;
-
-                            statusPill.Status = status.Value;
-                        });
-                    }
-                }, token);
+                });
+                if (status != null)
+                    statusPill.Status = status.Value;
             }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            onlineDisplayCancellationSource?.Dispose();
-            onlineDisplayCancellationSource = null;
-            base.Dispose(isDisposing);
         }
     }
 }
