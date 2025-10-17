@@ -127,10 +127,10 @@ namespace osu.Game.Online.API
             User = API.LocalUser.Value;
 
             if (isFailing) return;
-
             WebRequest = CreateWebRequest();
+
             WebRequest.Failed += Fail;
-            WebRequest.AllowRetryOnTimeout = false;
+            WebRequest.AllowRetryOnTimeout = true;
 
             WebRequest.AddHeader(@"Accept-Language", API.Language.ToCultureCode());
             WebRequest.AddHeader(@"x-api-version", API.APIVersion.ToString(CultureInfo.InvariantCulture));

@@ -11,8 +11,8 @@ namespace osu.Game.Online
             // defaults: osu-dev1.br0k3x.info, spectator-dev1.br0k3x.info, bss-dev1.br0k3x.info
 
 
-            WebsiteUrl = APIUrl = @"https://osu-dev1.br0k3x.info";               // [          osu!br0kE-web              ]
-            APIClientSecret = @"okHpgQVigVeWouVyJg6M88QaXx9q4Nqce7JxIFDV";//        [       Client Secret and ID          ]
+            WebsiteUrl = APIUrl = @"https://osu-dev1.br0k3x.info";// [          osu!br0kE-web              ]
+            APIClientSecret = @"wQfd0UAzbPn0EcYm1SZIn6eXAD8SFsSKJOOVH0Ak";//        [       Client Secret and ID          ]
             APIClientID = "1";//                                                    [     Generate via php artisan        ]
 
             SpectatorUrl = "https://spectator-dev1.br0k3x.info/spectator";//default: spectator.br0k3x.info/spectator          [                      ]
