@@ -7,18 +7,14 @@ namespace osu.Game.Online
     {
         public DevelopmentEndpointConfiguration()
         {
-            // DEVELOPER ENDPOINTS - these are hosted on a seperate server (the developer's PC) and are not guaranteed to be online at all times.
-            // defaults: osu-dev1.br0k3x.info, spectator-dev1.br0k3x.info, bss-dev1.br0k3x.info
-
-
-            WebsiteUrl = APIUrl = @"https://osu-dev1.br0k3x.info";// [          osu!br0kE-web              ]
-            APIClientSecret = @"wQfd0UAzbPn0EcYm1SZIn6eXAD8SFsSKJOOVH0Ak";//        [       Client Secret and ID          ]
+            WebsiteUrl = APIUrl = @"https://lazer.br0k3x.info";// [          osu!br0kE-web              ]
+            APIClientSecret = @"nqMg6qIQumjQ07acUN1MhTER4f8GzAzHnRwyw1AS";//        [       Client Secret and ID          ]
             APIClientID = "1";//                                                    [     Generate via php artisan        ]
 
-            SpectatorUrl = "https://spectator-dev1.br0k3x.info/spectator";//default: spectator.br0k3x.info/spectator          [                      ]
-            MultiplayerUrl = "https://spectator-dev1.br0k3x.info/multiplayer";//default: spectator.br0k3x.info/multiplayer    [    SignalR server    ]
-            MetadataUrl = "https://spectator-dev1.br0k3x.info/metadata";//default: spectator.br0k3x.info/metadata             [                      ]
-            BeatmapSubmissionServiceUrl = "https://bss-dev1.br0k3x.info";//default: bss.br0k3x.info                       [   Beatmap Submission Service   ]
+            SpectatorUrl = "https://spectator.br0k3x.info/spectator";//default: spectator.br0k3x.info/spectator          [                      ]
+            MultiplayerUrl = "https://spectator.br0k3x.info/multiplayer";//default: spectator.br0k3x.info/multiplayer    [    SignalR server    ]
+            MetadataUrl = "https://spectator.br0k3x.info/metadata";//default: spectator.br0k3x.info/metadata             [                      ]
+            BeatmapSubmissionServiceUrl = "https://bss.br0k3x.info";//default: bss.br0k3x.info                       [   Beatmap Submission Service   ]
         }
     }
 }
